@@ -1,6 +1,6 @@
 # Introduction
 
-This documents provides guidance and start point to review performance issue between SQL Environments (On-premises or Azure IaaS servers).
+This documents provides guidance and start point to review performance issue between SQL Environments, such as On-premises and Azure IaaS servers.
 
 > This document does not cover Azure SQL (PaaS).
 
