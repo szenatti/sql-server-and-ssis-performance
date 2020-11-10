@@ -1,11 +1,18 @@
+# Introduction
+
+This documents provides guidance and start point to review performance issue between SQL Environments (On-premises or Azure IaaS servers).
+
+> This document is does not cover Azure SQL (PaaS).
+
 # Azure - SQL Server IaaS
+
+First of all, review if the SQL Server and IaaS Server are configured as per:
 
 - Reference: https://docs.microsoft.com/en-us/azure/azure-sql/virtual-machines/windows/performance-guidelines-best-practices
 
-
-
-
 # SSIS 
+
+Compare SSIS configuration between two environments and get SSIS packages performance metrics (Duration).
 
 - Reference: https://www.red-gate.com/simple-talk/sql/bi/comparing-ssis-catalog-contents-using-dbfit-framework/
 
@@ -225,19 +232,9 @@ order by active_time desc
 
 ```
 
-##
+# SQL Server Database
 
-```sql
-
-```
-
-##
-
-```sql
-
-```
-
-# SQL Server
+Check tables size, index fragmentation and SQL Agent Jobs history between environments:
 
 - (OnPrem and Azure) Get Tables Size
 
@@ -275,7 +272,6 @@ WHERE DDIPS.database_id = DB_ID()
 and I.name is not null
 ```
 
-
 - (OnPrem and Azure) SQL Agent Job History
 
 ```sql
@@ -288,16 +284,14 @@ EXEC dbo.sp_help_jobhistory
 GO  
 ```
 
-- Validation
-    * (OnPrem and Azure) SQL Server Agent Job and SSIS running 32bit vs 64bit
-    * (OnPrem and Azure) SSISDB Properties, such as disk location, size, configuration...
-    * (OnPrem and Azure) Extract SSIS Log/Audit table from RACIDW database, fields: (RunLogTaskDetailID,TaskDescription,TaskKey,RunID,StartDate,EndDate,LoadType,CurrentState,FromDate,ToDate,Message and DWChangeDate)
+- Check list:
+    * (OnPrem and Azure) Compare if SSIS packages are running on 32bit or 64 bits, look at SSIS Package and SQL Agent Jobs
+    * (OnPrem and Azure) Compare SSISDB Properties, such as disk location, size, configuration, recovery mode...
+    * (OnPrem and Azure) Extract SSIS Log/Audit table from ETL database
     * (Azure) In Azure Portal check Server metrics (Memory, CPU, Disk...)
         * https://docs.microsoft.com/en-us/azure/monitoring/infrastructure-health/vmhealth-windows/winserver-memory-pctcommitted
+		* Enable Azure Monitor for Azure VM
     * (OnPrem and Azure) Export SSIS Packages from both environments and compare
     * (Azure) EventViewer, Windows Update, Scheduler, SQL Logs
     * (OnPrem and Azure) Windows Version, Virtual Memory***
         * https://serverfault.com/questions/930424/windows-server-2016-pagefile-does-not-increase
-
-
-##
